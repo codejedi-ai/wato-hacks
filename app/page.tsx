@@ -1,52 +1,31 @@
-"use client";
+import React from 'react';
 
-import { useState, useEffect } from "react";
-import { generateClient } from "aws-amplify/data";
-import type { Schema } from "@/amplify/data/resource";
-import "./../app/app.css";
-import { Amplify } from "aws-amplify";
-import outputs from "@/amplify_outputs.json";
-import "@aws-amplify/ui-react/styles.css";
-
-Amplify.configure(outputs);
-
-const client = generateClient<Schema>();
-
-export default function App() {
-  const [todos, setTodos] = useState<Array<Schema["Todo"]["type"]>>([]);
-
-  function listTodos() {
-    client.models.Todo.observeQuery().subscribe({
-      next: (data) => setTodos([...data.items]),
-    });
-  }
-
-  useEffect(() => {
-    listTodos();
-  }, []);
-
-  function createTodo() {
-    client.models.Todo.create({
-      content: window.prompt("Todo content"),
-    });
-  }
-
+const WarriorHacks: React.FC = () => {
   return (
-    <main>
-      <h1>My todos</h1>
-      <button onClick={createTodo}>+ new</button>
-      <ul>
-        {todos.map((todo) => (
-          <li key={todo.id}>{todo.content}</li>
-        ))}
-      </ul>
-      <div>
-        🥳 App successfully hosted. Try creating a new todo.
-        <br />
-        <a href="https://docs.amplify.aws/nextjs/start/quickstart/nextjs-app-router-client-components/">
-          Review next steps of this tutorial.
-        </a>
-      </div>
-    </main>
+    <div style={{ backgroundColor: '#F2EDA8', color: '#000000', fontFamily: 'Arial, sans-serif' }}>
+      <header style={{ backgroundColor: '#FAE100', padding: '20px', textAlign: 'center' }}>
+        <h1 style={{ color: '#EAAB00' }}>Warrior Hacks</h1>
+        <p>Welcome to the University of Waterloo's student hackathon!</p>
+      </header>
+      <main style={{ padding: '20px' }}>
+        <section id="about">
+          <h2>About the Event</h2>
+          <p>Join us for an exciting hackathon where students from all disciplines come together to innovate and create amazing projects.</p>
+        </section>
+        <section id="schedule">
+          <h2>Schedule</h2>
+          <p>Stay tuned for the event schedule and updates.</p>
+        </section>
+        <section id="contact">
+          <h2>Contact</h2>
+          <p>For more information, please contact us at hackathon@uwaterloo.ca.</p>
+        </section>
+      </main>
+      <footer style={{ backgroundColor: '#FED34C', textAlign: 'center', padding: '10px', position: 'fixed', width: '100%', bottom: '0' }}>
+        <p>&copy; 2025 University of Waterloo</p>
+      </footer>
+    </div>
   );
-}
+};
+
+export default WarriorHacks;
